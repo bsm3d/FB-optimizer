@@ -182,4 +182,4 @@ Contact via GitHub for authorization requests.
 
 Documentation version 1.0 — March 2026
 
-Made with love by Benoit (BSM) Saint-Moulin
+**Made with ❤️ by Benoit (BSM) Saint-Moulin**
