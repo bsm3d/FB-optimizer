@@ -34,7 +34,7 @@ Remove Reels, sponsored posts, Stories, People You May Know, Marketplace suggest
 
 ## Quick Start
 
-1. Download `fb-optimizer-1.0.xpi` from [Releases](../../releases)
+1. Download `fb-optimizer-1.0.xpi` from [[Releases](../../releases)](https://github.com/bsm3d/FB-optimizer/tree/main/releases)
 2. In Firefox: `about:addons` — *Install Add-on From File*
 3. Accept the installation
 4. Navigate to facebook.com — the extension activates automatically
@@ -65,7 +65,7 @@ Remove Reels, sponsored posts, Stories, People You May Know, Marketplace suggest
 
 ### Manual (signed XPI)
 
-1. Download `fb-optimizer-1.0.xpi` from [Releases](../../releases)
+1. Download `fb-optimizer-1.0.xpi` from [[Releases](../../releases)](https://github.com/bsm3d/FB-optimizer/tree/main/releases)
 2. In Firefox: `about:addons` — *Install Add-on From File*
 3. Accept the installation
 
