@@ -1,49 +1,60 @@
-# ⚡ FB Optimizer
+# FB Optimizer — Facebook Cleaner
 
-**Extension Firefox** qui supprime les distractions de Facebook et accélère la navigation.  
-Bloque les Reels, publicités, Stories, suggestions et trackers — avant même leur rendu.
+**Firefox extension** that removes distracting and tracking elements from Facebook before they even render.  
+100% local — zero data collected, zero external connections.
 
-> Par **Benoît (BSM) Saint-Moulin** — [bsm3d.com](https://www.bsm3d.com)
+> By **Benoît (BSM) Saint-Moulin** — [bsm3d.com](https://www.bsm3d.com)
 
 ---
 
-## Ce que ça bloque
+## What it blocks
 
-| Élément | Méthode | Gain |
+| Element | Method | Benefit |
 |---|---|---|
-| Reels & vidéos courtes | CSS + Observer | ⚡ Réseau + CPU |
-| Posts sponsorisés | CSS + Observer | ⚡ Réseau + CPU |
-| Stories | CSS | ⚡ Rendu |
-| People You May Know | CSS + Observer | ⚡ Rendu |
-| Marketplace (dans le feed) | CSS + Observer | ⚡ Rendu |
-| "Suggested for you" | Observer | ⚡ CPU |
-| Pixel tracking fbevents.js | webRequest | ⚡ Réseau |
+| Reels & short videos | CSS + Observer | faster |
+| Sponsored posts | CSS + Observer | faster |
+| Stories | CSS | faster |
+| People You May Know | CSS + Observer | faster |
+| Marketplace (in feed) | CSS + Observer | faster |
+| Suggested for you | Observer | faster |
+| Tracking pixel (fbevents.js) | webRequest | faster |
 
-**Le CSS est injecté à `document_start`** — les éléments sont masqués avant le premier rendu, pas après. Aucun flash de contenu.
+**CSS is injected at `document_start`** — elements are hidden before the first render, not after. No content flash.
+
+> Note: This extension does its best to keep up with Facebook's interface, but as Facebook frequently updates its layout and code, some features may stop working as expected after a Facebook update.
+
+---
+
+## Dashboard
+
+- **Master toggle** — enable / disable the extension in one click
+- **Per-block toggles** — enable or disable each category independently
+- **Session counter** — number of elements blocked since the popup was opened
+- **Total counter** — cumulative count across all sessions
 
 ---
 
 ## Installation
 
-### Via Firefox Add-ons (recommandé)
+### Via Firefox Add-ons (recommended)
 
-> *(soumission en cours — lien à venir)*
+> *(submission in progress — link coming soon)*
 
-### Manuel (XPI signé)
+### Manual (signed XPI)
 
-1. Télécharger `fb-optimizer-v1.0.xpi` depuis les [Releases](../../releases)
-2. Dans Firefox : `about:addons` → ⚙️ → *Installer depuis un fichier*
-3. Accepter l'installation
+1. Download `fb-optimizer-1.0.xpi` from [Releases](../../releases)
+2. In Firefox: `about:addons` — *Install Add-on From File*
+3. Accept the installation
 
-### Mode développeur (sources)
+### Developer mode (sources)
 
 ```bash
-git clone https://github.com/TON_USER/fb-optimizer.git
+git clone https://github.com/YOUR_USERNAME/fb-optimizer.git
 ```
 
-1. Firefox → `about:debugging` → *Ce Firefox*
-2. *Charger un module temporaire*
-3. Sélectionner `manifest.json` dans le dossier cloné
+1. Firefox → `about:debugging` → *This Firefox*
+2. *Load Temporary Add-on*
+3. Select `manifest.json` from the cloned folder
 
 ---
 
@@ -51,82 +62,80 @@ git clone https://github.com/TON_USER/fb-optimizer.git
 
 ```
 fb-optimizer/
-├── manifest.json       # MV2, valide AMO, gecko strict_min 121.0
-├── fb-optimizer.css    # CSS injecté à document_start (masquage avant rendu)
-├── content.js          # MutationObserver throttlé rAF + scan multi-blocs
-├── background.js       # webRequest → bloque fbevents.js (sites tiers)
-├── popup.html          # Interface toggle + compteur
-├── popup.js
+├── manifest.json       # MV2, AMO compliant, gecko strict_min 140.0
+├── fb-optimizer.css    # Injected at document_start — hides elements before render
+├── content.js          # MutationObserver (rAF throttle) + multi-block scan
+├── background.js       # webRequest — blocks fbevents.js on third-party sites only
+├── popup.html          # Dashboard UI (no inline JS — AMO compliant)
+├── popup.js            # Dashboard logic
 └── icons/
 ```
 
-### Principe de fonctionnement
+### How it works
 
 ```
 document_start
-    └── fb-optimizer.css injecté  →  masquage immédiat via sélecteurs stables
+    └── fb-optimizer.css injected  →  immediate hide via stable selectors
 
-DOM chargé
-    └── content.js démarre
-          ├── scan initial synchrone
-          └── MutationObserver (throttle rAF ~16ms)
-                ├── Reels injectés dynamiquement
+DOM loaded
+    └── content.js starts
+          ├── initial synchronous scan
+          └── MutationObserver (rAF throttle ~16ms)
+                ├── dynamically injected Reels
                 ├── Sponsored posts (aria + innerText)
                 ├── PYMK, Suggested, Marketplace
-                └── WeakSet → pas de référence forte, GC libre
+                └── WeakSet → no strong references, GC free
 
 webRequest (background.js)
-    └── bloque fbevents.js / connect.facebook.net sur sites TIERS uniquement
+    └── blocks fbevents.js / connect.facebook.net on THIRD-PARTY sites only
+        (facebook.com itself is left untouched to avoid breaking the site)
 ```
 
-### Pourquoi c'est rapide
+### Why it's fast
 
-- **CSS-first** : 90% du boulot est fait par le CSS, pas de JS pour ces éléments
-- **Throttle rAF** : l'observer ne tourne pas plus d'une fois par frame (~16ms)
-- **WeakSet** : les nœuds déjà traités ne sont pas re-scannés, le GC peut libérer la mémoire
-- **Pause automatique** : l'observer s'arrête quand l'onglet passe en arrière-plan (`visibilitychange`)
-- **Sélecteurs stables** : aucun class React obfusqué (`xABCDE`) — résistant aux mises à jour FB
+- **CSS-first** — 90% of the work is done by CSS, no JS needed for static elements
+- **rAF throttle** — the observer fires at most once per frame (~16ms)
+- **WeakSet** — processed nodes are never re-scanned, GC can free them freely
+- **Auto-pause** — observer stops when the tab goes to the background (`visibilitychange`)
+- **Stable selectors** — no obfuscated React classes (`xABCDE`) — resistant to FB updates
 
 ---
 
 ## Permissions
 
-| Permission | Utilité |
+| Permission | Why |
 |---|---|
-| `storage` | Mémoriser l'état actif/inactif et le compteur |
-| `activeTab` | Communiquer avec l'onglet FB actif (popup → content) |
-| `tabs` | Envoyer des messages au content script depuis le popup |
-| `webRequest` + `webRequestBlocking` | Bloquer fbevents.js sur sites tiers |
-| `*://*.facebook.com/*` | Injecter le CSS et le script sur Facebook |
-| `*://connect.facebook.net/*` | Bloquer le pixel de tracking |
+| `storage` | Persist toggle states and blocked counter across sessions |
+| `tabs` | Send messages from popup to the active content script |
+| `webRequest` + `webRequestBlocking` | Block fbevents.js on third-party sites before it reaches the network |
+| `*://*.facebook.com/*` | Inject CSS and content script on Facebook |
+| `*://connect.facebook.net/*` | Intercept tracking pixel requests |
 
 ---
 
-## Compatibilité
+## Compatibility
 
-- **Firefox 121+** (strict_min_version dans le manifest)
-- Manifest Version 2 (MV2) — compatible AMO
-- Testé sur facebook.com · Interface française et anglaise
+- **Firefox 140+** (`strict_min_version` in manifest)
+- Manifest Version 2 (MV2) — AMO compliant
+- Tested on facebook.com — French and English interfaces
 
 ---
 
-## Licence
+## License
 
-MIT — voir [LICENSE](LICENSE)
+MIT — see [LICENSE](LICENSE)
 
 ---
 
 ## Changelog
 
 ### v1.0
-- Fix : suppression de `host_permissions` (invalide en MV2, warning AMO)
-
-### v1.0
-- Nouveaux blocs : Sponsored, Stories, PYMK, Marketplace feed, Suggested for you
-- Ajout `background.js` + webRequest pour bloquer fbevents.js
-- CSS refondu en sections claires avec marqueur `data-fbopt`
-- Popup redesigné avec liste des blocs actifs
-
-### v3.1
-- Base : blocage Reels uniquement
-- Observer throttlé rAF, WeakSet, cleanup pagehide/visibilitychange
+- Initial release
+- CSS-first blocking at `document_start` for Reels, Stories, PYMK
+- MutationObserver with rAF throttle for dynamically injected content
+- webRequest blocking of fbevents.js on third-party sites
+- Per-block toggles with live apply / reveal (no page reload needed)
+- WeakSet node tracking, visibilitychange auto-pause, pagehide cleanup
+- Fixed: `data_collection_permissions` moved inside `gecko` block (AMO MV2 compliance)
+- Fixed: `strict_min_version` raised to 140.0 to match `data_collection_permissions` support
+- Fixed: `gecko_android` min version set to 142.0
