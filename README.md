@@ -3,7 +3,7 @@
 **Firefox extension** that removes distracting and tracking elements from Facebook before they even render.  
 100% local — zero data collected, zero external connections.
 
-> By **Benoît (BSM) Saint-Moulin** — [bsm3d.com](https://www.bsm3d.com)
+By **Benoît (BSM) Saint-Moulin** — [bsm3d.com](https://www.bsm3d.com)
 
 ---
 
