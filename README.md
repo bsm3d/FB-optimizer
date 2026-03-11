@@ -9,15 +9,15 @@
 
 ## What it blocks
 
-| Element | Method | Benefit |
+| Element | Method |
 |---|---|---|
-| Reels & short videos | CSS + Observer | faster |
-| Sponsored posts | CSS + Observer | faster |
-| Stories | CSS | faster |
-| People You May Know | CSS + Observer | faster |
-| Marketplace (in feed) | CSS + Observer | faster |
-| Suggested for you | Observer | faster |
-| Tracking pixel (fbevents.js) | webRequest | faster |
+| Reels & short videos | CSS + Observer |
+| Sponsored posts | CSS + Observer |
+| Stories | CSS |
+| People You May Know | CSS + Observer |
+| Marketplace (in feed) | CSS + Observer |
+| Suggested for you | Observer |
+| Tracking pixel (fbevents.js) | webRequest |
 
 **CSS is injected at `document_start`** — elements are hidden before the first render, not after. No content flash.
 
@@ -49,7 +49,7 @@
 ### Developer mode (sources)
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/fb-optimizer.git
+git clone https://github.com/bsm3d/fb-optimizer.git
 ```
 
 1. Firefox → `about:debugging` → *This Firefox*
