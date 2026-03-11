@@ -1,0 +1,66 @@
+{
+  "manifest_version": 2,
+  "name": "FB Optimizer",
+  "version": "1.0.0",
+  "description": "Removes Reels, ads, Stories and trackers from Facebook for a faster, cleaner experience. By Benoît (BSM) Saint-Moulin — bsm3d.com",
+  "author": "Benoît (BSM) Saint-Moulin — https://www.bsm3d.com",
+  "homepage_url": "https://www.bsm3d.com",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "fb-optimizer@bsm3d.com",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["none"],
+        "optional": []
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
+    }
+  },
+
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+
+  "permissions": [
+    "storage",
+    "tabs",
+    "webRequest",
+    "webRequestBlocking",
+    "*://*.facebook.com/*",
+    "*://*.fbcdn.net/*",
+    "*://connect.facebook.net/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.facebook.com/*"],
+      "js": ["content.js"],
+      "css": ["fb-optimizer.css"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16":  "icons/icon16.png",
+      "32":  "icons/icon32.png",
+      "48":  "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "FB Optimizer"
+  },
+
+  "icons": {
+    "16":  "icons/icon16.png",
+    "32":  "icons/icon32.png",
+    "48":  "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

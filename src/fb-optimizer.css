@@ -1,0 +1,85 @@
+/*
+ * =================================================================
+ *  FB Optimizer — fb-optimizer.css  v1.0
+ *  Author  : Benoît (BSM) Saint-Moulin — bsm3d.com
+ *  License : MIT
+ * =================================================================
+ *
+ *  Injected at document_start → elements hidden before first paint.
+ *  No flash, no JS needed for these selectors.
+ *
+ *  Selectors use stable attributes only (aria-*, href, data-*).
+ *  Never obfuscated React class names (xABCDE) — those change weekly.
+ *
+ *  Sections:
+ *    1. Reels
+ *    2. Sponsored posts
+ *    3. Stories
+ *    4. People You May Know
+ *    5. Marketplace (feed only)
+ *    6. Suggested for you  (JS-only, marker used here as fallback)
+ *    7. Generic data-fbopt marker  (JS double-protection fallback)
+ * =================================================================
+ */
+
+
+/* -- 1. REELS ------------------------------------------------------ */
+
+a[aria-label="reel"][href*="/reel/"]                    { display: none !important; }
+[data-type="hscroll-child"]:has(a[aria-label="reel"])   { display: none !important; }
+
+a[href^="/reel/"]                                       { display: none !important; }
+a[href^="/reels/"]                                      { display: none !important; }
+
+li:has(> a[href^="/reel/"])                             { display: none !important; }
+li:has(> a[href^="/reels/"])                            { display: none !important; }
+
+[data-pagelet*="Reels"]                                 { display: none !important; }
+[data-pagelet*="reels"]                                 { display: none !important; }
+
+[role="navigation"] a[href*="/reel"]                    { display: none !important; }
+[role="tablist"] [href*="reel"]                         { display: none !important; }
+[data-tab-key="reels"]                                  { display: none !important; }
+[aria-label="Reels"][role="tab"]                        { display: none !important; }
+
+
+/* -- 2. SPONSORED POSTS -------------------------------------------- */
+
+[data-pagelet*="Sponsored"]                             { display: none !important; }
+a[aria-label*="Sponsored"]                              { display: none !important; }
+a[aria-label*="Sponsorisé"]                             { display: none !important; }
+
+/* JS sets this marker on dynamically injected sponsored posts */
+[data-fbopt="ad"]                                       { display: none !important; }
+
+
+/* -- 3. STORIES ---------------------------------------------------- */
+
+[data-pagelet*="Stories"]                               { display: none !important; }
+[data-pagelet*="stories"]                               { display: none !important; }
+[aria-label="Stories"][role="region"]                   { display: none !important; }
+[aria-label="Stories"]                                  { display: none !important; }
+
+
+/* -- 4. PEOPLE YOU MAY KNOW ---------------------------------------- */
+
+[data-pagelet*="PeopleYouMayKnow"]                      { display: none !important; }
+[data-pagelet*="FriendSuggestions"]                     { display: none !important; }
+[aria-label*="People You May Know"]                     { display: none !important; }
+[data-fbopt="pymk"]                                     { display: none !important; }
+
+
+/* -- 5. MARKETPLACE IN FEED ---------------------------------------- */
+
+[data-pagelet*="Marketplace"]                           { display: none !important; }
+[data-fbopt="marketplace"]                              { display: none !important; }
+
+
+/* -- 6. SUGGESTED FOR YOU ------------------------------------------ */
+
+[data-fbopt="suggested"]                                { display: none !important; }
+
+
+/* -- 7. GENERIC MARKER (fallback if FB strips inline styles) ------- */
+
+[data-fbopt]                                            { display: none !important; }
