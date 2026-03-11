@@ -14,8 +14,11 @@
 
 ## Introduction
 
-Most browser attacks happen in layers. A single tool — even a good one — leaves gaps.
-The approach here is defense in depth: each layer stops what the others don't see.
+I am not a security expert. This document reflects my own strategy — tested and refined over many years of personal use.
+
+I started on the Amiga in 1990 and lived through every era of viruses, security holes, and browser wars. I have worked on infrastructures with demanding security requirements, and I learned everything the hard way — by doing, breaking things, and starting over. Coming from the Amiga, I kept one reflex that has served me well: optimize everything, waste nothing.
+
+Firefox is the browser I trust most today. It respects user privacy, it is governed openly, and it remains independent. After years of looking for extensions that matched what I actually needed and not finding them, I studied how Firefox extensions work and built my own — drawing on my background in CSS, HTML, PHP, MySQL, Linux, IRIX, AmigaOS and Windows. Sentinel and FB Optimizer are the result. They ran on my own machines for a long time before I shared them. Now that they are stable and proven, I am offering them to the community. I hope they are useful to others.
 
 This is not a paranoid setup. It is a reasonable, lightweight stack that runs entirely locally, requires no account, no subscription, and no ongoing maintenance beyond keeping Firefox updated.
 
@@ -62,6 +65,9 @@ Each arrow represents a point where something malicious can be stopped — or sl
 - Threat intelligence from 19+ cybersecurity firms, updated in real time
 - DNSSEC validation — prevents DNS spoofing and hijacking
 - Swiss non-profit — no IP logging, GDPR compliant, not subject to US law
+
+**Why Quad9 specifically:**
+Quad9 is not the only option — Cloudflare (1.1.1.1) and others offer similar DoH services and are perfectly valid choices. I personally chose Quad9 because it is based in Switzerland, outside US and EU jurisdiction, and operates as a non-profit with no commercial interest in your data. I also have a general concern about Cloudflare's footprint on the internet — when Cloudflare has an outage, a significant portion of the web goes down with it. That level of centralization makes me uncomfortable, both as a user and as someone who thinks about infrastructure. Quad9 is a more independent choice.
 
 **What it doesn't cover:**
 The content of pages. A clean domain serving a malicious page gets through.
@@ -200,4 +206,4 @@ No affiliation with any of the projects listed. No sponsorship.
 
 Documentation version 1.0 — March 2026
 
-Made with love by Benoit (BSM) Saint-Moulin
+**Made with ❤️ by Benoit (BSM) Saint-Moulin**
