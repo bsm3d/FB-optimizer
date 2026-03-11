@@ -16,7 +16,8 @@ Remove Reels, sponsored posts, Stories, People You May Know, Marketplace suggest
 
 ---
 <img width="421" height="755" alt="image" src="https://github.com/user-attachments/assets/e451fc3f-0a71-46ec-8636-fc3346598472" />
----
+
+
 ## Table of Contents
 
 - [Quick Start](#quick-start)
